@@ -7,11 +7,11 @@ var fg = new Image(); // Создание объекта
 var pipeUp = new Image(); // Создание объекта
 var pipeBottom = new Image(); // Создание объекта
 
-bird = "img/bird.png";
-bg.src = "img/bg.png"; 
-fg.src = "img/fg.png"; 
-pipeUp.src = "img/pipeUp.png"; 
-pipeBottom.src = "img/pipeBottom.png"; 
+bird = "img/flappy_bird_bird.png";
+bg.src = "img/flappy_bird_bg.png"; 
+fg.src = "img/flappy_bird_fg.png"; 
+pipeUp.src = "img/flappy_bird_pipeUp.png"; 
+pipeBottom.src = "img/flappy_bird_pipeBottom.png"; 
 
 function draw() {
     ctx.drawImage(bg, 0, 0);
