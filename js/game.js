@@ -17,22 +17,60 @@ pipeBottom.src = "img/pipeBottom.png"; // Заполнение переменн�
 
 var gap = 90; //Расстояние между трубами
 
+// Чтобы птыться подлетала
+document.addEventListener("keydown", moveUp);
+
+function moveUp() {
+    yPos -= 20
+}
+
+// Создание блоков
+var pipe = []
+    
+pipe[0] = {
+    x : cvs.width,
+    y : 0
+}
+
 //Птичья позиция
 var xPos = 10;
 var yPos = 150;
-var grav = 1;
+var grav = 1.5;
 
 
 function draw() { //Чтобы всё было на своих местах
     ctx.drawImage(bg, 0, 0); // Где фон
 
-    ctx.drawImage(pipeUp, 100, 0) // Где верзняя труба
-    ctx.drawImage(pipeBottom, 100, 0 + pipeUp.height + gap); // Где нижняя труба
+    for(var i = 0; i < pipe.length; i++) {
+     ctx.drawImage(pipeUp, pipe[i].x, pipe[i].y); // Где верзняя труба
+    ctx.drawImage(pipeBottom, pipe[i].x, pipe[i].y + pipeUp.height + gap); // Где нижняя труба
+    
+    pipe[i].x--;
+
+    if(pipe[i].x == 125) {
+        pipe.push({
+            x : cvs.width,
+            y : Math.floor(Math.random() * pipeUp.height) - pipeUp.height
+        });
+    }
+
+    // Чтобы при столкновениях страница перезагружалась
+
+    if(xPos + bird.width >= pipe[i].x
+        && xPos <= pipe[i].x + pipeUp.width 
+        && (yPos <= pipe[i].y + pipeUp.height
+            || yPos + bird.height >= pipe[i].y + pipeUp.height + gap)) {
+                location.reload();
+            }
+    }
+
+   
 
     ctx.drawImage(fg, 0, cvs.height - fg.height); // Где эта штука снизу короче
     ctx.drawImage(bird, xPos, yPos) // Где птица (но вообще за это отвечает 18 -19 строка)
 
-    yPos += grav;
+    yPos += grav; // Чтобы птытьса падала
+    requestAnimationFrame(draw);
 }
 
 pipeBottom,onload = draw;
