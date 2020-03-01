@@ -7,13 +7,21 @@ var fg = new Image(); // Создание объекта
 var pipeUp = new Image(); // Создание объекта
 var pipeBottom = new Image(); // Создание объекта
 
+// Заполнение переменных - какя переменная где находится (в какой папке)
+
 bird.src = "img/bird.png"; // Заполнение переменных
 bg.src = "img/bg.png"; // Заполнение переменных
 fg.src = "img/fg.png"; // Заполнение переменных
 pipeUp.src = "img/pipeUp.png"; // Заполнение переменных
 pipeBottom.src = "img/pipeBottom.png"; // Заполнение переменных
 
-// Заполнение переменных - какя переменная где находится (в какой папке)
+//Звуковые файлы
+
+var fly = new Audio
+var score_audio = new Audio
+
+fly.src = "audio/fly.mp3"
+score_audio.src = "audio/score.mp3"
 
 var gap = 90; //Расстояние между трубами
 
@@ -21,7 +29,8 @@ var gap = 90; //Расстояние между трубами
 document.addEventListener("keydown", moveUp);
 
 function moveUp() {
-    yPos -= 20
+    yPos -= 25
+    fly.play();
 }
 
 // Создание блоков
@@ -32,6 +41,7 @@ pipe[0] = {
     y : 0
 }
 
+var score = 0; // Переменная счёт чтобы оно считало сколько этих штук ты пролетел
 //Птичья позиция
 var xPos = 10;
 var yPos = 150;
@@ -59,8 +69,13 @@ function draw() { //Чтобы всё было на своих местах
     if(xPos + bird.width >= pipe[i].x
         && xPos <= pipe[i].x + pipeUp.width 
         && (yPos <= pipe[i].y + pipeUp.height
-            || yPos + bird.height >= pipe[i].y + pipeUp.height + gap)) {
-                location.reload();
+            || yPos + bird.height >= pipe[i].y + pipeUp.height + gap) || yPos + bird.height >=cvs.height - fg.height) {
+                location.reload(); // Перезагрузка страницы
+            }
+
+            if(pipe[i].x == 5) {
+                score++;
+                score_audio.play();
             }
     }
 
@@ -70,6 +85,11 @@ function draw() { //Чтобы всё было на своих местах
     ctx.drawImage(bird, xPos, yPos) // Где птица (но вообще за это отвечает 18 -19 строка)
 
     yPos += grav; // Чтобы птытьса падала
+
+    ctx.fillSryle = "#000";
+    ctx.font = "24px Verdana"
+    ctx.fillText("Счёт: " + score, 10, cvs.height - 20)
+
     requestAnimationFrame(draw);
 }
 
