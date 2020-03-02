@@ -13,19 +13,20 @@ bird.src = "img/bird.png"; // Заполнение переменных
 bg.src = "img/bg.png"; // Заполнение переменных
 fg.src = "img/fg.png"; // Заполнение переменных
 pipeUp.src = "img/pipeUp.png"; // Заполнение переменных
-pipeBottom.src = "img/pipeBottom.png"; // Заполнение переменных
+pipeBottom.src = "img/pipeBottom.png"; // Заполнение переменных 
 
 //Звуковые файлы
 
-var fly = new Audio
-var score_audio = new Audio
+var fly = new Audio // Создание объекта
+var score_audio = new Audio // Создание объекта
 
-fly.src = "audio/fly.mp3"
-score_audio.src = "audio/score.mp3"
+fly.src = "audio/fly.mp3" // Заполнение переменных 
+score_audio.src = "audio/score.mp3" // Заполнение переменных 
 
 var gap = 90; //Расстояние между трубами
 
 // Чтобы птыться подлетала
+
 document.addEventListener("keydown", moveUp);
 
 function moveUp() {
@@ -42,13 +43,16 @@ pipe[0] = {
 }
 
 var score = 0; // Переменная счёт чтобы оно считало сколько этих штук ты пролетел
+
 //Птичья позиция
+
 var xPos = 10;
 var yPos = 150;
 var grav = 1.5;
 
+//Чтобы всё было на своих местах
 
-function draw() { //Чтобы всё было на своих местах
+function draw() { 
     ctx.drawImage(bg, 0, 0); // Где фон
 
     for(var i = 0; i < pipe.length; i++) {
@@ -60,7 +64,7 @@ function draw() { //Чтобы всё было на своих местах
     if(pipe[i].x == 125) {
         pipe.push({
             x : cvs.width,
-            y : Math.floor(Math.random() * pipeUp.height) - pipeUp.height
+            y : Math.floor(Math.random() * pipeUp.height) - pipeUp.height // Чтобы дальше трубы рандомно генерировались
         });
     }
 
@@ -73,6 +77,8 @@ function draw() { //Чтобы всё было на своих местах
                 location.reload(); // Перезагрузка страницы
             }
 
+// Чтобы добавлялся счёт
+
             if(pipe[i].x == 5) {
                 score++;
                 score_audio.play();
@@ -82,13 +88,13 @@ function draw() { //Чтобы всё было на своих местах
    
 
     ctx.drawImage(fg, 0, cvs.height - fg.height); // Где эта штука снизу короче
-    ctx.drawImage(bird, xPos, yPos) // Где птица (но вообще за это отвечает 18 -19 строка)
+    ctx.drawImage(bird, xPos, yPos) // Где птица
 
     yPos += grav; // Чтобы птытьса падала
 
-    ctx.fillSryle = "#000";
-    ctx.font = "24px Verdana"
-    ctx.fillText("Счёт: " + score, 10, cvs.height - 20)
+    ctx.fillSryle = "#000"; // Цвет шрифта
+    ctx.font = "24px Verdana" // Размер шрифта
+    ctx.fillText("Счёт: " + score, 10, cvs.height - 20) // Чтобы счёт показывался
 
     requestAnimationFrame(draw);
 }
